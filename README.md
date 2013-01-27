@@ -1,4 +1,4 @@
 disCo
 =====
 
-jQuery plugin for display record collection data from Discogs
+jQuery plugin for displaying record collection data from Discogs. More to follow...
