@@ -108,7 +108,7 @@
 						});
 					})
 				} else {
-					$('#recordCollection').append('<p>' + settings.noReleasesNote + '</p>');
+					container.append('<p>' + settings.noReleasesNote + '</p>');
 				}
 		});
 		
