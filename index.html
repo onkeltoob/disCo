@@ -1,39 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
     <title>disCo by papatoob</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
-
   <body>
-
-    <header>
-      <div class="container">
+    <div class="wrapper">
+      <header>
         <h1>disCo</h1>
-        <h2>Show off your records on your website</h2>
+        <p>Show off your records on your website</p>
 
-        <section id="downloads">
-          <a href="https://github.com/papatoob/disCo/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/papatoob/disCo/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/papatoob/disCo" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+        <p class="view"><a href="https://github.com/papatoob/disCo">View the Project on GitHub <small>papatoob/disCo</small></a></p>
 
-    <div class="container">
-      <section id="main_content">
+
+        <ul>
+          <li><a href="https://github.com/papatoob/disCo/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/papatoob/disCo/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/papatoob/disCo">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
         <h1>Welcome to the disCo</h1>
 
-<p>disCo is a jQuery plugin that enables you to display your (or anyone else's) record collection hosted on <a href="http://www.discogs.com">Discogs</a>. If you haven't heard of Discogs, own a lot of music, and are at least a little nerdy you should seriously consider going there and putting your stuff together. The process of this is super comfortable, so it won't take too long (depending on the size of your collection). Once you're done you'll most definately feel the urge to let anyone know what you possess. And yes - size does matter.
-If you own a website and want to show off your collection or at least your latest purchases (because you're that super famous DJ getting tons of new material every week), you can use disCo exactly for that.</p>
+<p>disCo is a jQuery plugin that enables you to display your (or anyone else's) record collection hosted on <a href="http://www.discogs.com">Discogs</a>. If you haven't heard of Discogs, own a lot of music, and are at least a little nerdy you should seriously consider going there and putting your stuff together. The process of this is super comfortable, so it won't take too long (depending on the size of your collection). Once you're done you'll most definately feel the urge to let anyone know what you possess. And yes - size does matter.</p>
 
-<hr><h2>Usage</h2>
+<p>If you own a website and want to show off your collection or at least your latest purchases (because you're that super famous DJ getting tons of new material every week), you can use disCo exactly for that.</p>
+
+<h2>Usage</h2>
 
 <p>It's a jQuery plugin, so simply using it is pretty basic stuff: <a href="https://github.com/papatoob/disCo">Get the plugin</a> and put it some place reasonable within your site structure. After that, reference the resource like this:</p>
 
@@ -63,13 +64,65 @@ If you own a website and want to show off your collection or at least your lates
 &lt;/script&gt;
 </code></pre>
 
-<p>And here is what you get (on my site with some styling):
+<p>And here is what you get (on <a href="http://tobias-reinhardt.de/discogs-collection-plugin">my site</a> with some styling):
 <img src="http://tobias-reinhardt.de/img/disco.png" alt="Screenshot of generated records table"></p>
 
-<hr><h2>Settings</h2>
-      </section>
-    </div>
+<h2>Settings</h2>
 
+<p>There's a couple of settings available that have some effect on the output of the plugin's work:</p>
+
+<ul>
+<li>
+<code>userAttributeName</code>: The name of the data-attribute containing the username. You can either specify the complete attribute name (e.g. "data-discogsuser") or simply the second part ("discogsuser"). Default value: <code>"user"</code>
+</li>
+<li>
+<code>folder</code>: The ID of the folder you want to display records from. For now Discogs seems to allow folder requests only for the default folder containing all releases, so this option doesn't really make sense. Default value: <code>0</code>, so all releases are targeted</li>
+<li>
+<code>sort</code>: Sort column. Discogs only allows very few values here ("added", "artist", "label",...). Default value: <code>"added"</code>
+</li>
+<li>
+<code>sortOrder</code>: Sort order ("asc", "desc"). Default value: <code>"desc"</code>
+</li>
+<li>
+<code>results</code>: The number of results to be displayed. Beware: The larger the number, the more requests to Discogs will be made! Default value: <code>10</code>
+</li>
+<li>
+<code>resultElementClass</code>: Class attribute for the entire result table or paragraph (if no results are found). Default value: <code>"records"</code>
+</li>
+<li>
+<code>resultElementId</code>: ID for the entire result table or paragraph (if no results are found). Default value: <code>""</code>
+</li>
+<li>
+<code>headerId</code>: The release ID column name. Default value: <code>"ID"</code>
+</li>
+<li>
+<code>headerArtists</code>: The artists column name. Default value: <code>"Artists"</code>
+</li>
+<li>
+<code>headerTitle</code>: The title column name. Default value: <code>"Title"</code>
+</li>
+<li>
+<code>headerLabels</code>: The record labels column name. Default value: <code>"Labels"</code>
+</li>
+<li>
+<code>headerStyles</code>: The styles column name. Default value: <code>"Styles"</code>
+</li>
+<li>
+<code>headerYear</code>: The year column name (for the year of the release). Default value: <code>"Year"</code>
+</li>
+<li>
+<code>noReleasesNote</code>: Text to be displayed if no releases are found. Default value: <code>"No releases could be found."</code>
+</li>
+</ul><h2>What's next</h2>
+
+<p>I do have <a href="http://tobias-reinhardt.de/discogs-collection-plugin#ideas">some ideas regarding additional features</a>, but usually - after having achieved what I initially wanted to - I do not get back to those. But I'd of course be very happy about any contributions!</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/papatoob">papatoob</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
     
   </body>
 </html>
