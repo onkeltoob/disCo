@@ -105,7 +105,7 @@
 <li>
 <code>noReleasesNote: "No releases found."</code> Text to be displayed if no releases are found.</li>
 <li>
-<code>autoReserveHeight: false</code> If set to true the approximate height of the result table will be calculated and applied within a style attribute so "content flickering" (or rather "content moving") will be minimized. This setting is highly experimental as there can't be a global line-height factor for  every site using the plugin. Therefore, the height of an "average" result line needs to be somehow  calculated. As long as there is no way of doing this, I chose a default height of 25px per row.</li>
+<code>autoReserveHeight: false</code> If set to true the approximate height of the result table will be calculated and applied within a style attribute so "content flickering" (or rather "content moving") of subsequent elements will be minimized. This setting is rather experimental as it uses the height of the first (header) row once this is created and multiplies this values by the number of retrieved results plus 1 (for the header row).</li>
 </ul><h2>What's next</h2>
 
 <p>I do have <a href="http://tobias-reinhardt.de/discogs-collection-plugin#ideas">some ideas regarding additional features</a>, but usually - after having achieved what I initially wanted to - I do not get back to those. But I'd of course be very happy about any contributions!</p>
