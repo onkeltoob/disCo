@@ -32,7 +32,7 @@
 				"sortOrder": "desc",
 				// The number of results to be displayed. Beware: 
 				// The larger the number, the more requests to Discogs will be made!
-				"results": "10",
+				"results": 10,
 				// class for the entire result table or paragraph (if no results are found)
 				"resultElementClass": "records",
 				// ID for the entire result table or paragraph (if no results are found)
@@ -50,7 +50,13 @@
 				// The year column name
 				"headerYear" : "Year",
 				// Text to be displayed if no releases are found
-				"noReleasesNote" : "No releases could be found."
+				"noReleasesNote" : "No releases could be found.",
+				// If set to true the approximate height of the result table will be calculated and applied
+				// within a style attribute so "content flickering" (or rather "content moving") will be minimized.
+				// This setting is highly experimental as there can't be a global line-height factor for 
+				// every site using the plugin. Therefore, the height of an "average" result line needs to be somehow 
+				// calculated. As long as there is no way of doing this, I chose a default height of 25px per row.
+				"autoReserveHeight" : false
 			}, options);
 
 			// Create data attributes, if settings do not start with "data-"
@@ -78,6 +84,7 @@
 					if(resultSet.length > 0){
 						// Create table element
 						var resultTable = $(document.createElement('table'));
+						if(settings.autoReserveHeight){resultTable.css('height', ((settings.results + 1) * 25) + 'px')}
 						if(settings.resultElementClass){resultTable.addClass(settings.resultElementClass);}
 						if(settings.resultElementId){resultTable.attr('id', settings.resultElementId);}
 						// Append table header
