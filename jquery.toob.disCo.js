@@ -20,6 +20,8 @@
 			var settings = $.extend({
 				// The name of the data-attribute containing the username
 				'userAttributeName': 'user',
+				// The name of the data-attribute containing the collection type ("collection" or "wantlist")
+				'collectionAttributeName': 'collection',
 				// The ID of the folder you want to display records from.
 				// For now Discogs seems to allow folder requests only for the default folder containing all releases,
 				// so this option doesn't really make sense.Default value is 0, so all releases are targeted
@@ -50,65 +52,74 @@
 				// Text to be displayed if no releases are found
 				"noReleasesNote" : "No releases could be found."
 			}, options);
-			
-			// Create data attribute, if settings does not start with "data-"
+
+			// Create data attributes, if settings do not start with "data-"
 			settings.userAttributeName = (!/^data\-(.)+$/.test(settings.userAttributeName)) ? 'data-' + settings.userAttributeName : settings.userAttributeName;
+			settings.collectionAttributeName = (!/^data\-(.)+$/.test(settings.collectionAttributeName)) ? 'data-' + settings.collectionAttributeName : settings.collectionAttributeName;
 
 			this.each(function() {
 				var container = $(this);
-				$.getJSON('http://api.discogs.com/users/' 
-					+ $(this).attr(settings.userAttributeName) + '/collection/folders/' 
-					+ settings.folder + '/releases?'
-					+ 'per_page=' + settings.results 
-					+ '&sort=' + settings.sort 
-					+ '&sort_order=' + settings.sortOrder 
-					+ '&callback=?', function(results) {
-						if(results.data.releases.length > 0){
-							// Create table element
-							var resultTable = $(document.createElement('table'));
-							if(settings.resultElementClass){resultTable.addClass(settings.resultElementClass);}
-							if(settings.resultElementId){resultTable.attr('id', settings.resultElementId);}
-							// Append table header
-							resultTable.append('<tr><th>'
-								+ settings.headerId + '</th><th>'
-								+ settings.headerArtists + '</th><th>'
-								+ settings.headerTitle + '</th><th>'
-								+ settings.headerLabels + '</th><th>'
-								+ settings.headerStyles + '</th><th>'
-								+ settings.headerYear + '</th></tr>'
-							);
+				var url = 'http://api.discogs.com/users/'
+							+ container.attr(settings.userAttributeName) + '/{folder}'
+							+ '?per_page=' + settings.results 
+							+ '&sort=' + settings.sort 
+							+ '&sort_order=' + settings.sortOrder 
+							+ '&callback=?';
+				// Check type of result set to be retrieved (collection or wantlist)
+				var isCollection = !(container.attr(settings.collectionAttributeName) == 'wantlist')
+				if(isCollection){
+					url = url.replace('{folder}', 'collection/folders/' + settings.folder + '/releases');
+				} else {
+					url = url.replace('{folder}', 'wants');
+				}
+				
+				$.getJSON(url, function(results) {
+					var resultSet = (isCollection) ? results.data.releases : results.data.wants
+					if(resultSet.length > 0){
+						// Create table element
+						var resultTable = $(document.createElement('table'));
+						if(settings.resultElementClass){resultTable.addClass(settings.resultElementClass);}
+						if(settings.resultElementId){resultTable.attr('id', settings.resultElementId);}
+						// Append table header
+						resultTable.append('<tr><th>'
+							+ settings.headerId + '</th><th>'
+							+ settings.headerArtists + '</th><th>'
+							+ settings.headerTitle + '</th><th>'
+							+ settings.headerLabels + '</th><th>'
+							+ settings.headerStyles + '</th><th>'
+							+ settings.headerYear + '</th></tr>'
+						);
 
-							$.each(results.data.releases, function() {
-								// Write current release to variable. This seems to be neccessary in 
-								// order to use the release data inside of the following AJAX call.
-								// There's a probably a better way; at least it somehow looks pretty ugly. Anyway.
-								var release = this;
+						$.each(resultSet, function() {
+							// Write current release to variable. This seems to be neccessary in 
+							// order to use the release data inside of the following AJAX call.
+							// There's a probably a better way; at least it somehow looks pretty ugly. Anyway.
+							var release = this;
 
-								// Get details
-								$.ajax({
-									type: "GET",
-									url: release.basic_information.resource_url + '?callback=?',
-									processData: true,
-									data: {},
-									dataType: "json",
-									success: (function (releaseData) {
-										resultTable.append('<tr><td>'  
-											+ '<a href="' + releaseData.data.uri + '" title="' + release.basic_information.title + ' @ Discogs">' + release.id + '</a></td><td>' 
-											+ $.map(release.basic_information.artists, function(artist){return artist.name;}).join(', ') + '</td><td>' 
-											+ release.basic_information.title + '</td><td>' 
-											+ $.map(release.basic_information.labels, function(label){return label.name;}).join(', ') + '</td><td>' 
-											+ releaseData.data.styles.join(', ') + '</td><td>'
-											+ release.basic_information.year + '</td></tr>'
-										);
-									}),
-								});
+							// Get details
+							$.ajax({
+								type: "GET",
+								url: release.basic_information.resource_url + '?callback=?',
+								processData: true,
+								data: {},
+								dataType: "json",
+								success: (function (releaseData) {
+									resultTable.append('<tr><td>'  
+										+ '<a href="' + releaseData.data.uri + '" title="' + release.basic_information.title + ' @ Discogs">' + release.id + '</a></td><td>' 
+										+ $.map(release.basic_information.artists, function(artist){return artist.name;}).join(', ') + '</td><td>' 
+										+ release.basic_information.title + '</td><td>' 
+										+ $.map(release.basic_information.labels, function(label){return label.name;}).join(', ') + '</td><td>' 
+										+ releaseData.data.styles.join(', ') + '</td><td>'
+										+ ((release.basic_information.year != 0) ? release.basic_information.year : '-') + '</td></tr>'
+									);
+								}),
 							});
-							container.append(resultTable);
-						} else {
-							container.append('<p>' + settings.noReleasesNote + '</p>');
-						}
+						});
+						container.append(resultTable);
+					} else {
+						container.append('<p>' + settings.noReleasesNote + '</p>');
 					}
-				)
+				})
 			});
 
 			return this;
