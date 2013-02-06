@@ -67,50 +67,39 @@
 
 <h2>Settings</h2>
 
-<p>There's a couple of settings available that have some effect on the output of the plugin's work:</p>
+<p>There's a couple of settings available that have some effect on the output of the plugin's work, here they are including their default values:</p>
 
 <ul>
 <li>
-<code>userAttributeName</code>: The name of the data-attribute containing the username. You can either specify the complete attribute name (e.g. "data-discogsuser") or simply the second part ("discogsuser"). Default value: <code>"user"</code>
-</li>
+<code>userAttributeName: "user"</code> The name of the data-attribute containing the username. You can either specify the complete attribute name (e.g. "data-discogsuser") or simply the second part ("discogsuser").</li>
 <li>
-<code>folder</code>: The ID of the folder you want to display records from. For now Discogs seems to allow folder requests only for the default folder containing all releases, so this option doesn't really make sense. Default value: <code>0</code>, so all releases are targeted</li>
+<code>collectionAttributeName: "collection"</code> The name of the data-attribute containing the type of collection you want to retrieve. Value "wantlist" will retrieve the user's wantlist data, everything else will return the collection.</li>
 <li>
-<code>sort</code>: Sort column. Discogs only allows very few values here ("added", "artist", "label",...). Default value: <code>"added"</code>
-</li>
+<code>folder: 0</code> The ID of the folder you want to display records from. For now Discogs seems to allow folder requests only for the default folder containing all releases, so this option doesn't really make sense.</li>
 <li>
-<code>sortOrder</code>: Sort order ("asc", "desc"). Default value: <code>"desc"</code>
-</li>
+<code>sort: "added"</code> Sort column. Discogs only allows very few values here ("added", "artist", "label",...).</li>
 <li>
-<code>results</code>: The number of results to be displayed. Beware: The larger the number, the more requests to Discogs will be made! Default value: <code>10</code>
-</li>
+<code>sortOrder: "desc"</code> Sort order ("asc", "desc").</li>
 <li>
-<code>resultElementClass</code>: Class attribute for the entire result table or paragraph (if no results are found). Default value: <code>"records"</code>
-</li>
+<code>results: 10</code> The number of results to be displayed. Beware: The larger the number, the more requests to Discogs will be made!</li>
 <li>
-<code>resultElementId</code>: ID for the entire result table or paragraph (if no results are found). Default value: <code>""</code>
-</li>
+<code>resultElementClass: "records"</code> Class attribute for the entire result table or paragraph (if no results are found).</li>
 <li>
-<code>headerId</code>: The release ID column name. Default value: <code>"ID"</code>
-</li>
+<code>resultElementId: ""</code> ID for the entire result table or paragraph (if no results are found).</li>
 <li>
-<code>headerArtists</code>: The artists column name. Default value: <code>"Artists"</code>
-</li>
+<code>headerId: "ID"</code> The release ID column name.</li>
 <li>
-<code>headerTitle</code>: The title column name. Default value: <code>"Title"</code>
-</li>
+<code>headerArtists: "Artists"</code> The artists column name.</li>
 <li>
-<code>headerLabels</code>: The record labels column name. Default value: <code>"Labels"</code>
-</li>
+<code>headerTitle: "Title"</code> The title column name.</li>
 <li>
-<code>headerStyles</code>: The styles column name. Default value: <code>"Styles"</code>
-</li>
+<code>headerLabels: "Labels"</code> The record labels column name.</li>
 <li>
-<code>headerYear</code>: The year column name (for the year of the release). Default value: <code>"Year"</code>
-</li>
+<code>headerStyles: "Styles"</code> The styles column name.</li>
 <li>
-<code>noReleasesNote</code>: Text to be displayed if no releases are found. Default value: <code>"No releases could be found."</code>
-</li>
+<code>headerYear: "Year"</code> The year column name (for the year of the release).</li>
+<li>
+<code>noReleasesNote: "No releases found."</code> Text to be displayed if no releases are found.</li>
 </ul><h2>What's next</h2>
 
 <p>I do have <a href="http://tobias-reinhardt.de/discogs-collection-plugin#ideas">some ideas regarding additional features</a>, but usually - after having achieved what I initially wanted to - I do not get back to those. But I'd of course be very happy about any contributions!</p>
