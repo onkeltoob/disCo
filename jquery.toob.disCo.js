@@ -52,10 +52,10 @@
 				// Text to be displayed if no releases are found
 				"noReleasesNote" : "No releases could be found.",
 				// If set to true the approximate height of the result table will be calculated and applied
-				// within a style attribute so "content flickering" (or rather "content moving") will be minimized.
-				// This setting is highly experimental as there can't be a global line-height factor for 
-				// every site using the plugin. Therefore, the height of an "average" result line needs to be somehow 
-				// calculated. As long as there is no way of doing this, I chose a default height of 25px per row.
+				// within a style attribute so "content flickering" (or rather "content moving") of subsequent elements 
+				// will be minimized. This setting is rather experimental as it uses the height of the first (header) 
+				// row once this is created and multiplies this values by the number of retrieved results plus 1 (for 
+				// the header row).
 				"autoReserveHeight" : false
 			}, options);
 
@@ -84,7 +84,6 @@
 					if(resultSet.length > 0){
 						// Create table element
 						var resultTable = $(document.createElement('table'));
-						if(settings.autoReserveHeight){resultTable.css('height', ((settings.results + 1) * 25) + 'px')}
 						if(settings.resultElementClass){resultTable.addClass(settings.resultElementClass);}
 						if(settings.resultElementId){resultTable.attr('id', settings.resultElementId);}
 						// Append table header
@@ -96,6 +95,10 @@
 							+ settings.headerStyles + '</th><th>'
 							+ settings.headerYear + '</th></tr>'
 						);
+						
+						// Append table now, so height of first row can be used to calculate approximate height of table
+						container.append(resultTable);
+						if(settings.autoReserveHeight){resultTable.css('height', ((resultSet.length + 1) * resultTable.find('tr').eq(0).height()) + 'px');}
 
 						$.each(resultSet, function() {
 							// Write current release to variable. This seems to be neccessary in 
@@ -122,7 +125,6 @@
 								}),
 							});
 						});
-						container.append(resultTable);
 					} else {
 						container.append('<p>' + settings.noReleasesNote + '</p>');
 					}
