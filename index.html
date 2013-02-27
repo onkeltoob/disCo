@@ -105,7 +105,9 @@
 <li>
 <code>noReleasesNote: "No releases found."</code> Text to be displayed if no releases are found.</li>
 <li>
-<code>autoReserveHeight: false</code> If set to true the approximate height of the result table will be calculated and applied within a style attribute so "content flickering" (or rather "content moving") of subsequent elements will be minimized. This setting is rather experimental as it uses the height of the first (header) row once this is created and multiplies this values by the number of retrieved results plus 1 (for the header row).</li>
+<code>autoReserveHeight: false</code> If set to true the approximate height of the result table will be calculated and applied within a style attribute so "content flickering" (or rather "content moving") of subsequent elements will be minimized. This setting is rather experimental as it uses the height of the first (header) row once this is created and multiplies this values by the number of retrieved results plus 1 (for the header row) and a configurable multiplier (see below).</li>
+<li>
+<code>autoHeightMultiplier: 1</code> Factor for the table's calculated height. Use this, if your table has a significant number of multiline rows "autoHeightMultiplier"</li>
 </ul><h2>What's next</h2>
 
 <p>I do have <a href="http://tobias-reinhardt.de/discogs-collection-plugin#ideas">some ideas regarding additional features</a>, but usually - after having achieved what I initially wanted to - I do not get back to those. But I'd of course be very happy about any contributions!</p>
