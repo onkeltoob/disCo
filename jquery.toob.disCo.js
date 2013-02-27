@@ -55,8 +55,11 @@
 				// within a style attribute so "content flickering" (or rather "content moving") of subsequent elements 
 				// will be minimized. This setting is rather experimental as it uses the height of the first (header) 
 				// row once this is created and multiplies this values by the number of retrieved results plus 1 (for 
-				// the header row).
-				"autoReserveHeight" : false
+				// the header row) and a configurable multiplier (see below).
+				"autoReserveHeight" : false,
+				// Factor for the table's calculated height. Use this, if your table has a significant 
+				// number of multiline rows
+				"autoHeightMultiplier" : 1
 			}, options);
 
 			// Create data attributes, if settings do not start with "data-"
@@ -98,7 +101,7 @@
 						
 						// Append table now, so height of first row can be used to calculate approximate height of table
 						container.append(resultTable);
-						if(settings.autoReserveHeight){resultTable.css('height', ((resultSet.length + 1) * resultTable.find('tr').eq(0).height()) + 'px');}
+						if(settings.autoReserveHeight){resultTable.css('height', ((resultSet.length + 1) * settings.autoHeightMultiplier * resultTable.find('tr').eq(0).height()) + 'px');}
 
 						$.each(resultSet, function() {
 							// Write current release to variable. This seems to be neccessary in 
