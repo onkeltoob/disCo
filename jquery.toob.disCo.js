@@ -75,7 +75,7 @@
 							+ '&sort_order=' + settings.sortOrder 
 							+ '&callback=?';
 				// Check type of result set to be retrieved (collection or wantlist)
-				var isCollection = !(container.attr(settings.collectionAttributeName) == 'wantlist')
+				var isCollection = (container.attr(settings.collectionAttributeName) !== 'wantlist');
 				if(isCollection){
 					url = url.replace('{folder}', 'collection/folders/' + settings.folder + '/releases');
 				} else {
@@ -83,7 +83,7 @@
 				}
 				
 				$.getJSON(url, function(results) {
-					var resultSet = (isCollection) ? results.data.releases : results.data.wants
+					var resultSet = (isCollection) ? results.data.releases : results.data.wants;
 					if(resultSet.length > 0){
 						// Create table element
 						var resultTable = $(document.createElement('table'));
@@ -123,15 +123,15 @@
 										+ release.basic_information.title + '</td><td>' 
 										+ $.map(release.basic_information.labels, function(label){return label.name;}).join(', ') + '</td><td>' 
 										+ releaseData.data.styles.join(', ') + '</td><td>'
-										+ ((release.basic_information.year != 0) ? release.basic_information.year : '-') + '</td></tr>'
+										+ ((release.basic_information.year !== 0) ? release.basic_information.year : '-') + '</td></tr>'
 									);
-								}),
+								})
 							});
 						});
 					} else {
 						container.append('<p>' + settings.noReleasesNote + '</p>');
 					}
-				})
+				});
 			});
 
 			return this;
